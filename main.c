@@ -13,7 +13,7 @@ int main()
 
 	//Wrong_input *wronger = init_wrong_input(1);
 
-	char arr[1100];
+	char arr[1100]; //сделать 100 и каждый раз идти к arr[0], когда встретили \n, для полигона выделять +100 памяти 
 
 	FILE* myfile;
 	myfile = fopen("geo.txt", "r");
@@ -177,7 +177,7 @@ int main()
 						wrong_step = 0;
 						break;
 					}
-					geo->circle[geo->size_circle - 1].serial_number = number_figure;
+					geo->circle[geo->size_circle - 1].serial_number = number_figure; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 					int_geometry_push_circle(geo);
 					number_figure++;
 					point_split = 0;
@@ -195,70 +195,88 @@ int main()
 				break;
 			}
 			break;
-			// case 2:
-			// switch (triangle_letter) {
-			// 	case 0:
-			// 	if (arr[i] == 't') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 1:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'r') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 2:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'i') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 3:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'a') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 4:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'n') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 5:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'g') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 6:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'l') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 7:
-			// 	wrong_step++;
-			// 	if (arr[i] == 'e') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 8:
-			// 	wrong_step++;
-			// 	if (arr[i] == '(') triangle_letter++;
-			// 	else triangle_letter = -1;
-			// 	break;
-			// 	case 7:
-			// 	wrong_step++;
-			// 	if (isdigit(arr[i]) && symbol_minus <= 1) {
-			// 		geo->triangle[geo->size_triangle - 1].point.x = arr[i] - '0' + (geo->triangle[geo->size_triangle - 1].point.x * 10);
-			// 		numbers_point++;
-			// 	} else if (arr[i] == '-' && numbers_point == 0) {
-			// 		symbol_minus++;
-			// 	} else if (arr[i] == ' ' && numbers_point != 0) {
-			// 		triangle_letter++;
-			// 		if (symbol_minus == 1) geo->triangle[geo->size_triangle - 1].point.x *= -1;
-			// 		numbers_point = 0;
-			// 		symbol_minus = 0;
-			// 	} else triangle_letter = -1;
-			// 	break;
-			// 	default:
-			// 	break;
-			// }
-			// break;
+			case 2:
+			switch (triangle_letter) {
+				case 0:
+				if (arr[i] == 't') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 1:
+				wrong_step++;
+				if (arr[i] == 'r') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 2:
+				wrong_step++;
+				if (arr[i] == 'i') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 3:
+				wrong_step++;
+				if (arr[i] == 'a') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 4:
+				wrong_step++;
+				if (arr[i] == 'n') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 5:
+				wrong_step++;
+				if (arr[i] == 'g') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 6:
+				wrong_step++;
+				if (arr[i] == 'l') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 7:
+				wrong_step++;
+				if (arr[i] == 'e') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 8:
+				wrong_step++;
+				if (arr[i] == '(') triangle_letter++;
+				else triangle_letter = -1;
+				break;
+				case 9:
+				wrong_step++;
+				if (arr[i] == ' ' && triangle_number >= 1) {
+
+				}
+				if (isdigit(arr[i]) && symbol_minus <= 1) {
+					geo->triangle[geo->size_triangle - 1].point[triangle_number].x = arr[i] - '0' + (geo->triangle[geo->size_triangle - 1].point[triangle_number].x * 10);
+					numbers_point++;
+				} else if (arr[i] == '-' && numbers_point == 0) {
+					symbol_minus++;
+				} else if (arr[i] == ' ' && numbers_point != 0) {
+					triangle_letter++;
+					if (symbol_minus == 1) geo->triangle[geo->size_triangle - 1].point[triangle_number].x *= -1;
+					numbers_point = 0;
+					symbol_minus = 0;
+				} else triangle_letter = -1;
+				break;
+				case 10:
+				wrong_step++;
+				if (isdigit(arr[i]) && symbol_minus <= 1) {
+					geo->triangle[geo->size_triangle - 1].point[triangle_number].y = arr[i] - '0' + (geo->triangle[geo->size_triangle - 1].point[triangle_number].y * 10);
+					numbers_point++;
+				} else if (arr[i] == '-' && numbers_point == 0) {
+					symbol_minus++;
+				} else if (arr[i] == ',' && numbers_point != 0) {
+					triangle_letter--; //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+					if (symbol_minus == 1) geo->triangle[geo->size_triangle - 1].point[triangle_number].y *= -1;
+					numbers_point = 0;
+					symbol_minus = 0;
+					triangle_number++;
+				} else triangle_letter = -1;
+				break;
+				default:
+				break;
+			}
+			break;
 			default:
 			break;
 		}
@@ -270,10 +288,10 @@ int main()
 		printf("%ld %d %d %.3f\n", geo->circle[g].serial_number, geo->circle[g].point.x, geo->circle[g].point.y, geo->circle[g].radius);
 	}
 
-	printf("%d\n", geo->triangle[0].point[2].x);
-	int_geometry_push_triangle(geo);
-	geo->triangle[1].point[3].x = 5;
-	printf("%d\n", geo->triangle[1].point[3].x);
+	// printf("%d\n", geo->triangle[0].point[2].x);
+	// int_geometry_push_triangle(geo);
+	// geo->triangle[1].point[3].x = 5;
+	// printf("%d\n", geo->triangle[1].point[3].x);
 
 	fclose(myfile);
 

@@ -9,7 +9,7 @@ Geometry *int_geometry(size_t initial_figure) {
 	if (geo != NULL) {
 		geo->triangle = malloc(sizeof(Triangle));
 		geo->size_triangle = 1;
-		geo->triangle->point = malloc(sizeof(Point) * 40);
+		geo->triangle->point = malloc(sizeof(Point) * 4);
 		geo->triangle->point[0].x = geo->triangle->point[1].x = geo->triangle->point[2].x = geo->triangle->point[3].x =
 			geo->triangle->point[0].y = geo->triangle->point[1].y = geo->triangle->point[2].y = geo->triangle->point[3].y = 0;
 		// geo->triangle->point0.x = geo->triangle->point1.x = geo->triangle->point2.x = geo->triangle->point3.x =
@@ -36,6 +36,7 @@ Poligon *int_poligon(size_t initial_points) {
 void int_geometry_push_triangle(Geometry *geo) {
 	geo->size_triangle += 1;
 	geo->triangle = realloc(geo->triangle, geo->size_triangle * sizeof(Triangle));
+	geo->triangle[geo->size_triangle - 1].point = realloc(geo->triangle[geo->size_triangle - 1].point, sizeof(Point) * 4);
 	geo->triangle[geo->size_triangle - 1].point[0].x = geo->triangle[geo->size_triangle - 1].point[1].x = geo->triangle[geo->size_triangle - 1].point[2].x = geo->triangle[geo->size_triangle - 1].point[3].x =
 		geo->triangle[geo->size_triangle - 1].point[0].y = geo->triangle[geo->size_triangle - 1].point[1].y = geo->triangle[geo->size_triangle - 1].point[2].y = geo->triangle[geo->size_triangle - 1].point[3].y = 0;
 }

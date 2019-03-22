@@ -1,0 +1,12 @@
+circle(-3 2, 1.1)  ver
+circle(-4 2, 0)
+circle(-4 2, 1.1) ver
+circle(-32, 1.2)
+circle(-3 2, 1..3)
+circle(-3 2, 1.1) ver
+circle(-3 2, 1.1) ver
+circle(-3 2, 1.1) ver
+cirle(-3 123 2, 1.4)
+circle-3 2, 1.5)
+circle(-3 2, 1)  ver
+circle(-3 2, 1.1) ver

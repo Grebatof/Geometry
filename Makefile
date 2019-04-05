@@ -2,7 +2,7 @@ FLAGS := -std=c99
 
 all: prog
 
-prog: main.o geometry.o processing.o
+prog: main.o geometry.o processing.o input.o
 	gcc -Wall main.o geometry.o input.o processing.o -o main -lm $(FLAGS)
 main.o: main.c
 	gcc -Wall -c main.c -o main.o -lm $(FLAGS)

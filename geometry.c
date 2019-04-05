@@ -3,6 +3,8 @@
 #include <string.h>
 #include <stddef.h>
 #include "geometry.h"
+#include "input.h"
+#include "processing.h"
 
 Geometry *int_geometry(size_t initial_figure) {
 	Geometry *geo = malloc(sizeof(*geo));
@@ -10,19 +12,19 @@ Geometry *int_geometry(size_t initial_figure) {
 		geo->triangle = malloc(sizeof(Triangle));
 		geo->size_triangle = 1;
 		geo->triangle->point = malloc(sizeof(Point) * 4);
-		geo->triangle->point[0].x = geo->triangle->point[1].x = geo->triangle->point[2].x = geo->triangle->point[3].x =
-			geo->triangle->point[0].y = geo->triangle->point[1].y = geo->triangle->point[2].y = geo->triangle->point[3].y = 0;
-		// geo->triangle->point0.x = geo->triangle->point1.x = geo->triangle->point2.x = geo->triangle->point3.x =
-		// 	geo->triangle->point0.y = geo->triangle->point1.y = geo->triangle->point2.y = geo->triangle->point3.y = 0;
+		for (int k = 0; k < 4; k++) {
+	    geo->triangle[geo->size_triangle - 1].point[k].x = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
+	  }
 		//сделать v->data->data для poligon и его points
 		// Poligon *pol = malloc(sizeof(*pol));
 		// if (pol != NULL) pol->points = malloc(sizeof(Point));
 		geo->poligon = malloc(sizeof(Poligon));
+		geo->poligon->points = malloc(sizeof(Point) * 4);
 		geo->size_poligon = 1;
+		geo->poligon->numeral_points = 4;
 		geo->circle = malloc(sizeof(Circle));
 		geo->size_circle = 1;
-		geo->circle->point.x = geo->circle->point.y = 0;
-		geo->circle->radius = 0;
+		geo->serial_number = 1;
 	}
 	return geo;
 }
@@ -37,19 +39,32 @@ void int_geometry_push_triangle(Geometry *geo) {
 	geo->size_triangle += 1;
 	geo->triangle = realloc(geo->triangle, geo->size_triangle * sizeof(Triangle));
 	geo->triangle[geo->size_triangle - 1].point = realloc(geo->triangle[geo->size_triangle - 1].point, sizeof(Point) * 4);
-	geo->triangle[geo->size_triangle - 1].point[0].x = geo->triangle[geo->size_triangle - 1].point[1].x = geo->triangle[geo->size_triangle - 1].point[2].x = geo->triangle[geo->size_triangle - 1].point[3].x =
-		geo->triangle[geo->size_triangle - 1].point[0].y = geo->triangle[geo->size_triangle - 1].point[1].y = geo->triangle[geo->size_triangle - 1].point[2].y = geo->triangle[geo->size_triangle - 1].point[3].y = 0;
+	for (int k = 0; k < 4; k++) {
+    geo->triangle[geo->size_triangle - 1].point[k].x = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
+  }
 }
 
 void int_geometry_push_circle(Geometry *geo) {
 	geo->size_circle += 1;
 	geo->circle = realloc(geo->circle, geo->size_circle * sizeof(Circle));
-	geo->circle[geo->size_circle - 1].point.x = geo->circle[geo->size_circle - 1].point.y = 0;
-	geo->circle[geo->size_circle - 1].radius = 0;
 }
 
+void int_geometry_push_poligon(Geometry *geo) {
+	geo->size_poligon += 1;
+	geo->poligon = realloc(geo->poligon, geo->size_poligon * sizeof(Poligon));
+	geo->poligon[geo->size_poligon - 1].numeral_points = 4;
 
+	geo->poligon[geo->size_poligon - 1].points = calloc(0, sizeof(Point) * 4);
+	/*for (int k = 0; k < 4; k++) {
+    geo->poligon[geo->size_poligon - 1].points[k].x = geo->poligon[geo->size_poligon - 1].points[k].y = 0;
+  }*/
+}
 
+void int_geometry_push_poligon_point(Geometry *geo) {
+	geo->poligon[geo->size_poligon - 1].numeral_points++;
+	geo->poligon[geo->size_poligon - 1].points = realloc(geo->poligon[geo->size_poligon - 1].points, sizeof(Point) * geo->poligon->numeral_points);
+	geo->poligon[geo->size_poligon - 1].points[geo->poligon[geo->size_poligon - 1].numeral_points - 1].x = geo->poligon[geo->size_poligon - 1].points[geo->poligon[geo->size_poligon - 1].numeral_points - 1].y = 0;
+}
 
 // int int_vector_push_back(IntVector *v, int item) {
 // 	if (v->data == NULL || v == NULL) return -1;

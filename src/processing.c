@@ -8,6 +8,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define M_PI 3.1415926535
+
+float distance_between_points(Point first_point, Point second_point)
+{
+  return sqrt((pow(first_point.x - second_point.x, 2) + pow(first_point.y - second_point.y, 2)));
+}
+
 void error_handling(int* i, int size, char* arr, int error, int row_count)
 {
     int j;
@@ -76,6 +83,11 @@ int figure_check(char* figure_name)
     return 0;
 }
 // возвращать тип ошибки
+
+void circle_perimeter_calculation(Geometry* geo)
+{
+  geo->circle[geo->size_circle - 1].perimeter = (float) geo->circle[geo->size_circle - 1].radius * M_PI * 2;
+}
 int processing_radius(int* i, int size, char* arr, Geometry* geo)
 {
     int powka = 1;
@@ -222,11 +234,16 @@ int processing_circle(int* i, int size, char* arr, Geometry* geo, int row_count)
         error_handling(i, size, arr, error, row_count);
         return -1;
     }
+    circle_perimeter_calculation(geo);
     geo->circle[geo->size_circle - 1].serial_number = geo->serial_number++;
     int_geometry_push_circle(geo);
     return 0;
 }
 
+void triangle_perimeter_calculation(Geometry* geo)
+{
+  geo->triangle[geo->size_triangle - 1].perimeter = (float) distance_between_points(geo->triangle[geo->size_triangle - 1].point[0], geo->triangle[geo->size_triangle - 1].point[1]) + distance_between_points(geo->triangle[geo->size_triangle - 1].point[1], geo->triangle[geo->size_triangle - 1].point[2]) + distance_between_points(geo->triangle[geo->size_triangle - 1].point[2], geo->triangle[geo->size_triangle - 1].point[0]);
+}
 int processing_first_coordinates_triangle(
         int* i, int size, char* arr, Geometry* geo)
 {
@@ -453,13 +470,20 @@ int processing_triangle(
         error_handling(i, size, arr, error, row_count);
         return -1;
     }
+    triangle_perimeter_calculation(geo);
     geo->triangle[geo->size_triangle - 1].serial_number = geo->serial_number++;
     int_geometry_push_triangle(geo);
     return 0;
 }
 
-int processing_first_coordinates_poligon(
-        int* i, int size, char* arr, Geometry* geo)
+void poligon_perimeter_calculation(Geometry* geo)
+{
+  for (int number = 0; number < geo->poligon[geo->size_poligon - 1].numeral_points - 1 - 1; number++) {
+    geo->poligon[geo->size_poligon - 1].perimeter += (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[number], geo->poligon[geo->size_poligon - 1].points[number + 1]);
+  }
+}
+
+int processing_first_coordinates_poligon(int* i, int size, char* arr, Geometry* geo)
 {
     int symbol_minus = 0;
     int numbers_points = 0;
@@ -537,6 +561,7 @@ int processing_first_coordinates_poligon(
     }
     return -1;
 }
+
 int processing_next_coordinates_poligon(
         int* i, int size, char* arr, Geometry* geo)
 {
@@ -696,6 +721,7 @@ int processing_poligon(
         error_handling(i, size, arr, error, row_count);
         return -1;
     }
+    poligon_perimeter_calculation(geo);
     geo->poligon[geo->size_poligon - 1].serial_number = geo->serial_number++;
     int_geometry_push_poligon(geo);
     return 0;

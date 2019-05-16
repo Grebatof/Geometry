@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-Geometry* int_geometry(size_t initial_figure)
+Geometry* int_geometry()
 {
     Geometry* geo = malloc(sizeof(*geo));
     if (geo != NULL) {
@@ -15,8 +15,7 @@ Geometry* int_geometry(size_t initial_figure)
         geo->size_triangle = 1;
         geo->triangle->point = malloc(sizeof(Point) * 4);
         for (int k = 0; k < 4; k++) {
-            geo->triangle[geo->size_triangle - 1].point[k].x
-                    = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
+            geo->triangle[geo->size_triangle - 1].point[k].x = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
         }
         //сделать v->data->data для poligon и его points
         // Poligon *pol = malloc(sizeof(*pol));
@@ -32,7 +31,7 @@ Geometry* int_geometry(size_t initial_figure)
     return geo;
 }
 
-Poligon* int_poligon(size_t initial_points)
+Poligon* int_poligon()
 {
     Poligon* pol = malloc(sizeof(*pol));
     if (pol != NULL)
@@ -43,13 +42,10 @@ Poligon* int_poligon(size_t initial_points)
 void int_geometry_push_triangle(Geometry* geo)
 {
     geo->size_triangle += 1;
-    geo->triangle
-            = realloc(geo->triangle, geo->size_triangle * sizeof(Triangle));
-    geo->triangle[geo->size_triangle - 1].point = realloc(
-            geo->triangle[geo->size_triangle - 1].point, sizeof(Point) * 4);
+    geo->triangle = realloc(geo->triangle, geo->size_triangle * (sizeof(Triangle) + 10));
+    geo->triangle[geo->size_triangle - 1].point = realloc(geo->triangle[geo->size_triangle - 1].point, sizeof(Point) * 4 + 10);
     for (int k = 0; k < 4; k++) {
-        geo->triangle[geo->size_triangle - 1].point[k].x
-                = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
+        geo->triangle[geo->size_triangle - 1].point[k].x = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
     }
 }
 
@@ -75,38 +71,7 @@ geo->poligon[geo->size_poligon - 1].points[k].x = geo->poligon[geo->size_poligon
 void int_geometry_push_poligon_point(Geometry* geo)
 {
     geo->poligon[geo->size_poligon - 1].numeral_points++;
-    geo->poligon[geo->size_poligon - 1].points = realloc(
-            geo->poligon[geo->size_poligon - 1].points,
-            sizeof(Point) * geo->poligon->numeral_points);
-    geo->poligon[geo->size_poligon - 1]
-            .points[geo->poligon[geo->size_poligon - 1].numeral_points - 1]
-            .x
-            = geo->poligon[geo->size_poligon - 1]
-                      .points[geo->poligon[geo->size_poligon - 1].numeral_points
-                              - 1]
-                      .y
-            = 0;
+    geo->poligon[geo->size_poligon - 1].points = realloc(geo->poligon[geo->size_poligon - 1].points, sizeof(Point) * geo->poligon->numeral_points);
+    geo->poligon[geo->size_poligon - 1].points[geo->poligon[geo->size_poligon - 1].numeral_points - 1].x
+            = geo->poligon[geo->size_poligon - 1].points[geo->poligon[geo->size_poligon - 1].numeral_points - 1].y = 0;
 }
-
-// int int_vector_push_back(IntVector *v, int item) {
-// 	if (v->data == NULL || v == NULL) return -1;
-// 	if (v->capacity == 0) v->capacity = 2;
-// 	if (v->size == v->capacity) {
-// 		v->capacity *= 2;
-// 		v->data = realloc(v->data, v->capacity * sizeof(int));
-// 	}
-// 	v->size++;
-// 	v->data[v->size - 1] = item;
-// 	return 0;
-// }
-
-/*IntVector *int_vector_new(size_t initial_capacity) {
-        IntVector *v = malloc(sizeof(*v));
-        if (v != NULL &&  initial_capacity > 0) {
-                v->data = malloc(sizeof(int) * initial_capacity);
-                v->size = 0;
-                v->capacity = initial_capacity;
-                if (v->data == NULL) printf("WARNING! ARRAY IS NULL\n");
-        }
-        return v;
-}*/

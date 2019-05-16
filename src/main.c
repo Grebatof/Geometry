@@ -10,7 +10,7 @@
 
 int main()
 {
-    Geometry* geo = int_geometry(1);
+    Geometry* geo = int_geometry();
 
     char arr[100]; //сделать 100 и каждый раз идти к arr[0], когда встретили \n,
                    //для полигона выделять +100 памяти
@@ -39,17 +39,25 @@ int main()
     int number_triangle = 0;
     int number_poligon = 0;
     int k;
-    for (j = 1; j < geo->serial_number; j++) {
-        if (j == geo->circle[number_circle].serial_number) {
+    int serial_number = geo->serial_number;
+    int shape_serial_number;
+    int points_poligon;
+    for (j = 1; j < serial_number; j++) {
+        shape_serial_number = geo->circle[number_circle].serial_number;
+        if (j == shape_serial_number) {
             printf("%ld.  circle(%d %d, %.3f)\n\n",
                    geo->circle[number_circle].serial_number,
                    geo->circle[number_circle].point.x,
                    geo->circle[number_circle].point.y,
                    geo->circle[number_circle].radius);
+            printf("\tperimeter = %.3f\n", geo->circle[number_circle].perimeter);
+            printf("\tarea = %.3f\n", geo->circle[number_circle].area);
+            printf("\n");
             number_circle++;
             continue;
         }
-        if (j == geo->triangle[number_triangle].serial_number) {
+        shape_serial_number = geo->triangle[number_triangle].serial_number;
+        if (j == shape_serial_number) {
             printf("%ld.  triangle((%d %d, %d %d, %d %d, %d %d))\n\n",
                    geo->triangle[number_triangle].serial_number,
                    geo->triangle[number_triangle].point[0].x,
@@ -60,39 +68,30 @@ int main()
                    geo->triangle[number_triangle].point[2].y,
                    geo->triangle[number_triangle].point[3].x,
                    geo->triangle[number_triangle].point[3].y);
+            printf("\tperimeter = %.3f\n", geo->triangle[number_triangle].perimeter);
+            printf("\tarea = %.3f\n", geo->triangle[number_triangle].area);
+            printf("\n");
             number_triangle++;
             continue;
         }
-        if (j == geo->poligon[number_poligon].serial_number) {
+        shape_serial_number = geo->poligon[number_poligon].serial_number;
+        if (j == shape_serial_number) {
+            points_poligon = geo->poligon[number_poligon].numeral_points - 2;
             printf("%ld.  poligon((%d %d,",
                    geo->poligon[number_poligon].serial_number,
                    geo->poligon[number_poligon].points[0].x,
                    geo->poligon[number_poligon].points[0].y);
-            for (k = 1; k < geo->poligon[number_poligon].numeral_points - 2;
-                 k++) {
-                printf(" %d %d,",
-                       geo->poligon[number_poligon].points[k].x,
-                       geo->poligon[number_poligon].points[k].y);
+            for (k = 1; k < points_poligon; k++) {
+                printf(" %d %d,", geo->poligon[number_poligon].points[k].x, geo->poligon[number_poligon].points[k].y);
             }
-            printf(" %d %d))\n\n",
-                   geo->poligon[number_poligon].points[k].x,
-                   geo->poligon[number_poligon].points[k].y);
+            printf(" %d %d))\n\n", geo->poligon[number_poligon].points[k].x, geo->poligon[number_poligon].points[k].y);
+            printf("\tperimeter = %.3f\n", geo->poligon[number_poligon].perimeter);
+            printf("\tarea = %.3f\n", geo->poligon[number_poligon].area);
+            printf("\n");
             number_poligon++;
             continue;
         }
     }
-
-    /*geo->poligon[0].points[0].x = 5;
-
-    int_geometry_push_poligon(geo);
-    int_geometry_push_poligon(geo);
-    int_geometry_push_poligon_point(geo);
-    int_geometry_push_poligon_point(geo);
-
-    geo->poligon[2].points[6].y = 155;
-
-    printf("%d %d\n", geo->poligon[0].points[0].x,
-    geo->poligon[2].points[6].y);*/
 
     fclose(myfile);
 

@@ -83,7 +83,10 @@ int figure_check(char* figure_name)
     return 0;
 }
 // возвращать тип ошибки
-
+void circle_area_calculation(Geometry* geo)
+{
+  geo->circle[geo->size_circle - 1].area = (float) geo->circle[geo->size_circle - 1].radius * geo->circle[geo->size_circle - 1].radius * M_PI;
+}
 void circle_perimeter_calculation(Geometry* geo)
 {
   geo->circle[geo->size_circle - 1].perimeter = (float) geo->circle[geo->size_circle - 1].radius * M_PI * 2;
@@ -235,17 +238,23 @@ int processing_circle(int* i, int size, char* arr, Geometry* geo, int row_count)
         return -1;
     }
     circle_perimeter_calculation(geo);
+    circle_area_calculation(geo);
     geo->circle[geo->size_circle - 1].serial_number = geo->serial_number++;
     int_geometry_push_circle(geo);
     return 0;
 }
 
+
+void triangle_area_calculation(Geometry* geo)
+{
+  float p = geo->triangle[geo->size_triangle - 1].perimeter / 2.0;
+  geo->triangle[geo->size_triangle - 1].area = (float) sqrt(p * (p - distance_between_points(geo->triangle[geo->size_triangle - 1].point[0], geo->triangle[geo->size_triangle - 1].point[1])) * (p - distance_between_points(geo->triangle[geo->size_triangle - 1].point[1], geo->triangle[geo->size_triangle - 1].point[2])) * (p - distance_between_points(geo->triangle[geo->size_triangle - 1].point[2], geo->triangle[geo->size_triangle - 1].point[0])));
+}
 void triangle_perimeter_calculation(Geometry* geo)
 {
   geo->triangle[geo->size_triangle - 1].perimeter = (float) distance_between_points(geo->triangle[geo->size_triangle - 1].point[0], geo->triangle[geo->size_triangle - 1].point[1]) + distance_between_points(geo->triangle[geo->size_triangle - 1].point[1], geo->triangle[geo->size_triangle - 1].point[2]) + distance_between_points(geo->triangle[geo->size_triangle - 1].point[2], geo->triangle[geo->size_triangle - 1].point[0]);
 }
-int processing_first_coordinates_triangle(
-        int* i, int size, char* arr, Geometry* geo)
+int processing_first_coordinates_triangle(int* i, int size, char* arr, Geometry* geo)
 {
     int symbol_minus = 0;
     int numbers_points = 0;
@@ -326,8 +335,7 @@ int processing_first_coordinates_triangle(
     }
     return -1;
 }
-int processing_next_coordinates_triangle(
-        int* i, int size, char* arr, Geometry* geo)
+int processing_next_coordinates_triangle(int* i, int size, char* arr, Geometry* geo)
 {
     int symbol_minus = 0;
     int numbers_points = 0;
@@ -460,17 +468,16 @@ int processing_triangle(
 {
     int error;
 
-    if ((error = processing_first_coordinates_triangle(i, size, arr, geo))
-        != -1) {
+    if ((error = processing_first_coordinates_triangle(i, size, arr, geo)) != -1) {
         error_handling(i, size, arr, error, row_count);
         return -1;
     }
-    if ((error = processing_next_coordinates_triangle(i, size, arr, geo))
-        != -1) {
+    if ((error = processing_next_coordinates_triangle(i, size, arr, geo)) != -1) {
         error_handling(i, size, arr, error, row_count);
         return -1;
     }
     triangle_perimeter_calculation(geo);
+    triangle_area_calculation(geo);
     geo->triangle[geo->size_triangle - 1].serial_number = geo->serial_number++;
     int_geometry_push_triangle(geo);
     return 0;
@@ -482,7 +489,6 @@ void poligon_perimeter_calculation(Geometry* geo)
     geo->poligon[geo->size_poligon - 1].perimeter += (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[number], geo->poligon[geo->size_poligon - 1].points[number + 1]);
   }
 }
-
 int processing_first_coordinates_poligon(int* i, int size, char* arr, Geometry* geo)
 {
     int symbol_minus = 0;
@@ -561,9 +567,7 @@ int processing_first_coordinates_poligon(int* i, int size, char* arr, Geometry* 
     }
     return -1;
 }
-
-int processing_next_coordinates_poligon(
-        int* i, int size, char* arr, Geometry* geo)
+int processing_next_coordinates_poligon(int* i, int size, char* arr, Geometry* geo)
 {
     int symbol_minus = 0;
     int numbers_points = 0;
@@ -701,8 +705,7 @@ int processing_next_coordinates_poligon(
     }
     return -1;
 }
-int processing_poligon(
-        int* i, int size, char* arr, Geometry* geo, int row_count)
+int processing_poligon(int* i, int size, char* arr, Geometry* geo, int row_count)
 {
     int error;
     free(geo->poligon[geo->size_poligon - 1].points);

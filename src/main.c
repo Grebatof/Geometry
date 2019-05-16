@@ -47,6 +47,7 @@ int main()
                    geo->circle[number_circle].point.y,
                    geo->circle[number_circle].radius);
             printf("\tperimeter = %.3f\n", geo->circle[number_circle].perimeter);
+            printf("\tarea = %.3f\n", geo->circle[number_circle].area);
             printf("\n");
             number_circle++;
             continue;
@@ -63,6 +64,7 @@ int main()
                    geo->triangle[number_triangle].point[3].x,
                    geo->triangle[number_triangle].point[3].y);
             printf("\tperimeter = %.3f\n", geo->triangle[number_triangle].perimeter);
+            printf("\tarea = %.3f\n", geo->triangle[number_triangle].area);
             printf("\n");
             number_triangle++;
             continue;

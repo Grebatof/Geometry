@@ -1,18 +1,35 @@
 FLAGS := -std=c99
+SRC_DIR := ./src
+BIN_DIR := ./bin
+OBJ_DIR := ./build
+.PHONY: clean install uninstall all run
 
-all: prog
+all: $(BIN_DIR)/main
 
-prog: main.o geometry.o processing.o input.o
-	gcc -Wall main.o geometry.o input.o processing.o -o main -lm $(FLAGS)
-main.o: main.c
-	gcc -Wall -c main.c -o main.o -lm $(FLAGS)
-geometry.o: geometry.c
-	gcc -Wall -c geometry.c -o geometry.o $(FLAGS)
-input.o: input.c
-	gcc -Wall -c input.c -o input.o -lm $(FLAGS)
-processing.o: processing.c
-	gcc -Wall -c processing.c -o processing.o -lm $(FLAGS)
+$(BIN_DIR)/main: $(OBJ_DIR)/main.o $(OBJ_DIR)/geometry.o $(OBJ_DIR)/processing.o $(OBJ_DIR)/input.o
+	gcc -Wall -Wextra $(OBJ_DIR)/main.o $(OBJ_DIR)/geometry.o $(OBJ_DIR)/processing.o $(OBJ_DIR)/input.o -o $(BIN_DIR)/main -lm $(FLAGS)
+
+$(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
+	gcc -Wall -Wextra -c  $(SRC_DIR)/main.c -o  $(OBJ_DIR)/main.o -lm $(FLAGS)
+
+$(OBJ_DIR)/geometry.o: $(SRC_DIR)/geometry.c
+		gcc -Wall -Wextra -c  $(SRC_DIR)/geometry.c -o  $(OBJ_DIR)/geometry.o -lm $(FLAGS)
+
+$(OBJ_DIR)/processing.o: $(SRC_DIR)/processing.c
+	gcc -Wall -Wextra -c  $(SRC_DIR)/processing.c -o  $(OBJ_DIR)/processing.o -lm $(FLAGS)
+
+$(OBJ_DIR)/input.o: $(SRC_DIR)/input.c
+	gcc -Wall -Wextra -c  $(SRC_DIR)/input.c -o  $(OBJ_DIR)/input.o $(FLAGS)
 
 clean:
-	rm -f *.o
-	main
+	find -name "*.o" -exec rm -rf {} +
+	rm -rf ./bin/main
+
+run: all
+	$(BIN_DIR)/main
+
+install:
+	sudo cp ./bin/main /usr/bin/main
+
+uninstall:
+	sudo rm -f /usr/bin/main

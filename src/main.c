@@ -70,20 +70,14 @@ int main()
             continue;
         }
         if (j == geo->poligon[number_poligon].serial_number) {
-            printf("%ld.  poligon((%d %d,",
-                   geo->poligon[number_poligon].serial_number,
-                   geo->poligon[number_poligon].points[0].x,
-                   geo->poligon[number_poligon].points[0].y);
-            for (k = 1; k < geo->poligon[number_poligon].numeral_points - 2;
-                 k++) {
-                printf(" %d %d,",
-                       geo->poligon[number_poligon].points[k].x,
-                       geo->poligon[number_poligon].points[k].y);
+            printf("%ld.  poligon((%d %d,", geo->poligon[number_poligon].serial_number, geo->poligon[number_poligon].points[0].x, geo->poligon[number_poligon].points[0].y);
+            for (k = 1; k < geo->poligon[number_poligon].numeral_points - 2; k++)
+            {
+                printf(" %d %d,", geo->poligon[number_poligon].points[k].x, geo->poligon[number_poligon].points[k].y);
             }
-            printf(" %d %d))\n\n",
-                   geo->poligon[number_poligon].points[k].x,
-                   geo->poligon[number_poligon].points[k].y);
+            printf(" %d %d))\n\n", geo->poligon[number_poligon].points[k].x, geo->poligon[number_poligon].points[k].y);
             printf("\tperimeter = %.3f\n", geo->poligon[number_poligon].perimeter);
+            printf("\tarea = %.3f\n", geo->poligon[number_poligon].area);
             printf("\n");
             number_poligon++;
             continue;

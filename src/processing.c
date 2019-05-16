@@ -483,6 +483,29 @@ int processing_triangle(
     return 0;
 }
 
+void poligon_area_calculation(Geometry* geo)
+{
+  float a1, a2, b1, b2, c1, c2, p1, p2;
+  int numeral_points = geo->poligon[geo->size_poligon - 1].numeral_points;
+  // null i = 0 here
+  a1 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[0], geo->poligon[geo->size_poligon - 1].points[numeral_points - 1]);
+  b1 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[numeral_points - 1], geo->poligon[geo->size_poligon - 1].points[1]);
+  c1 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[1], geo->poligon[geo->size_poligon - 1].points[0]);
+  p1 = (a1 + b1 + c1) / 2;
+  geo->poligon[geo->size_poligon - 1].area = sqrt(p1 * (p1 - a1) * (p1 - b1) * (p1 - c1)) / 2;
+  for (int i = 1; i < numeral_points / 2; i++) {
+    a1 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[i], geo->poligon[geo->size_poligon - 1].points[numeral_points - i]);
+    b1 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[numeral_points - i], geo->poligon[geo->size_poligon - 1].points[i + 1]);
+    c1 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[i + 1], geo->poligon[geo->size_poligon - 1].points[i]);
+    p1 = (a1 + b1 + c1) / 2;
+    geo->poligon[geo->size_poligon - 1].area += sqrt(p1 * (p1 - a1) * (p1 - b1) * (p1 - c1)) / 2;
+    a2 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[numeral_points - i], geo->poligon[geo->size_poligon - 1].points[i + 1]);
+    b2 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[i + 1], geo->poligon[geo->size_poligon - 1].points[numeral_points - i - 1]);
+    c2 = (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[numeral_points - i - 1], geo->poligon[geo->size_poligon - 1].points[numeral_points - i]);
+    p2 = (a2 + b2 + c2) / 2;
+    geo->poligon[geo->size_poligon - 1].area += sqrt(p2 * (p2 - a2) * (p2 - b2) * (p2 - c2)) / 2;;
+  }
+}
 void poligon_perimeter_calculation(Geometry* geo)
 {
   for (int number = 0; number < geo->poligon[geo->size_poligon - 1].numeral_points - 1 - 1; number++) {
@@ -725,6 +748,7 @@ int processing_poligon(int* i, int size, char* arr, Geometry* geo, int row_count
         return -1;
     }
     poligon_perimeter_calculation(geo);
+    poligon_area_calculation(geo);
     geo->poligon[geo->size_poligon - 1].serial_number = geo->serial_number++;
     int_geometry_push_poligon(geo);
     return 0;

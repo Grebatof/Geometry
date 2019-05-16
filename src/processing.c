@@ -483,6 +483,7 @@ int processing_triangle(
     return 0;
 }
 
+
 void poligon_area_calculation(Geometry* geo)
 {
   float a1, a2, b1, b2, c1, c2, p1, p2;
@@ -508,7 +509,8 @@ void poligon_area_calculation(Geometry* geo)
 }
 void poligon_perimeter_calculation(Geometry* geo)
 {
-  for (int number = 0; number < geo->poligon[geo->size_poligon - 1].numeral_points - 1 - 1; number++) {
+  int points_poligon = geo->poligon[geo->size_poligon - 1].numeral_points - 1 - 1;
+  for (int number = 0; number < points_poligon; number++) {
     geo->poligon[geo->size_poligon - 1].perimeter += (float) distance_between_points(geo->poligon[geo->size_poligon - 1].points[number], geo->poligon[geo->size_poligon - 1].points[number + 1]);
   }
 }

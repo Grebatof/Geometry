@@ -10,7 +10,7 @@
 
 int main()
 {
-    Geometry* geo = int_geometry(1);
+    Geometry* geo = int_geometry();
 
     char arr[100]; //сделать 100 и каждый раз идти к arr[0], когда встретили \n,
                    //для полигона выделять +100 памяти
@@ -39,8 +39,12 @@ int main()
     int number_triangle = 0;
     int number_poligon = 0;
     int k;
-    for (j = 1; j < geo->serial_number; j++) {
-        if (j == geo->circle[number_circle].serial_number) {
+    int serial_number = geo->serial_number;
+    int shape_serial_number;
+    int points_poligon;
+    for (j = 1; j < serial_number; j++) {
+        shape_serial_number = geo->circle[number_circle].serial_number;
+        if (j == shape_serial_number) {
             printf("%ld.  circle(%d %d, %.3f)\n\n",
                    geo->circle[number_circle].serial_number,
                    geo->circle[number_circle].point.x,
@@ -52,7 +56,8 @@ int main()
             number_circle++;
             continue;
         }
-        if (j == geo->triangle[number_triangle].serial_number) {
+        shape_serial_number = geo->triangle[number_triangle].serial_number;
+        if (j == shape_serial_number) {
             printf("%ld.  triangle((%d %d, %d %d, %d %d, %d %d))\n\n",
                    geo->triangle[number_triangle].serial_number,
                    geo->triangle[number_triangle].point[0].x,
@@ -69,9 +74,11 @@ int main()
             number_triangle++;
             continue;
         }
-        if (j == geo->poligon[number_poligon].serial_number) {
+        shape_serial_number = geo->poligon[number_poligon].serial_number;
+        if (j == shape_serial_number) {
+          points_poligon = geo->poligon[number_poligon].numeral_points - 2;
             printf("%ld.  poligon((%d %d,", geo->poligon[number_poligon].serial_number, geo->poligon[number_poligon].points[0].x, geo->poligon[number_poligon].points[0].y);
-            for (k = 1; k < geo->poligon[number_poligon].numeral_points - 2; k++)
+            for (k = 1; k < points_poligon; k++)
             {
                 printf(" %d %d,", geo->poligon[number_poligon].points[k].x, geo->poligon[number_poligon].points[k].y);
             }

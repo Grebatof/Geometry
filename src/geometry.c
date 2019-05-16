@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-Geometry* int_geometry(size_t initial_figure)
+Geometry* int_geometry()
 {
     Geometry* geo = malloc(sizeof(*geo));
     if (geo != NULL) {
@@ -32,7 +32,7 @@ Geometry* int_geometry(size_t initial_figure)
     return geo;
 }
 
-Poligon* int_poligon(size_t initial_points)
+Poligon* int_poligon()
 {
     Poligon* pol = malloc(sizeof(*pol));
     if (pol != NULL)

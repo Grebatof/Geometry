@@ -2,6 +2,6 @@
 #define _INPUT_H_
 #include "geometry.h"
 
-void input_processing(char* arr, int size, Geometry * geo, int row_count);
+void input_processing(char* arr, int size, Geometry* geo, int row_count);
 
 #endif

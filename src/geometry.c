@@ -15,8 +15,7 @@ Geometry* int_geometry()
         geo->size_triangle = 1;
         geo->triangle->point = malloc(sizeof(Point) * 4);
         for (int k = 0; k < 4; k++) {
-            geo->triangle[geo->size_triangle - 1].point[k].x
-                    = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
+            geo->triangle[geo->size_triangle - 1].point[k].x = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
         }
         //сделать v->data->data для poligon и его points
         // Poligon *pol = malloc(sizeof(*pol));
@@ -72,15 +71,7 @@ geo->poligon[geo->size_poligon - 1].points[k].x = geo->poligon[geo->size_poligon
 void int_geometry_push_poligon_point(Geometry* geo)
 {
     geo->poligon[geo->size_poligon - 1].numeral_points++;
-    geo->poligon[geo->size_poligon - 1].points = realloc(
-            geo->poligon[geo->size_poligon - 1].points,
-            sizeof(Point) * geo->poligon->numeral_points);
-    geo->poligon[geo->size_poligon - 1]
-            .points[geo->poligon[geo->size_poligon - 1].numeral_points - 1]
-            .x
-            = geo->poligon[geo->size_poligon - 1]
-                      .points[geo->poligon[geo->size_poligon - 1].numeral_points
-                              - 1]
-                      .y
-            = 0;
+    geo->poligon[geo->size_poligon - 1].points = realloc(geo->poligon[geo->size_poligon - 1].points, sizeof(Point) * geo->poligon->numeral_points);
+    geo->poligon[geo->size_poligon - 1].points[geo->poligon[geo->size_poligon - 1].numeral_points - 1].x
+            = geo->poligon[geo->size_poligon - 1].points[geo->poligon[geo->size_poligon - 1].numeral_points - 1].y = 0;
 }

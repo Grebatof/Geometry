@@ -9,17 +9,20 @@ typedef struct {
 } Point;
 
 typedef struct {
+    float perimeter;
     Point point;
     float radius;
     size_t serial_number;
 } Circle;
 
 typedef struct {
+    float perimeter;
     Point* point;
     size_t serial_number;
 } Triangle;
 
 typedef struct {
+    float perimeter;
     Point* points;
     size_t numeral_points;
     size_t serial_number;

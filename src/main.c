@@ -82,18 +82,6 @@ int main()
         }
     }
 
-    /*geo->poligon[0].points[0].x = 5;
-
-    int_geometry_push_poligon(geo);
-    int_geometry_push_poligon(geo);
-    int_geometry_push_poligon_point(geo);
-    int_geometry_push_poligon_point(geo);
-
-    geo->poligon[2].points[6].y = 155;
-
-    printf("%d %d\n", geo->poligon[0].points[0].x,
-    geo->poligon[2].points[6].y);*/
-
     fclose(myfile);
 
     return 0;

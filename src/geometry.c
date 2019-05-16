@@ -87,26 +87,3 @@ void int_geometry_push_poligon_point(Geometry* geo)
                       .y
             = 0;
 }
-
-// int int_vector_push_back(IntVector *v, int item) {
-// 	if (v->data == NULL || v == NULL) return -1;
-// 	if (v->capacity == 0) v->capacity = 2;
-// 	if (v->size == v->capacity) {
-// 		v->capacity *= 2;
-// 		v->data = realloc(v->data, v->capacity * sizeof(int));
-// 	}
-// 	v->size++;
-// 	v->data[v->size - 1] = item;
-// 	return 0;
-// }
-
-/*IntVector *int_vector_new(size_t initial_capacity) {
-        IntVector *v = malloc(sizeof(*v));
-        if (v != NULL &&  initial_capacity > 0) {
-                v->data = malloc(sizeof(int) * initial_capacity);
-                v->size = 0;
-                v->capacity = initial_capacity;
-                if (v->data == NULL) printf("WARNING! ARRAY IS NULL\n");
-        }
-        return v;
-}*/

@@ -43,8 +43,8 @@ Poligon* int_poligon(size_t initial_points)
 void int_geometry_push_triangle(Geometry* geo)
 {
     geo->size_triangle += 1;
-    geo->triangle = realloc(geo->triangle, geo->size_triangle * (sizeof(Triangle) + 5));
-    geo->triangle[geo->size_triangle - 1].point = realloc(geo->triangle[geo->size_triangle - 1].point, sizeof(Point) * 4);
+    geo->triangle = realloc(geo->triangle, geo->size_triangle * (sizeof(Triangle) + 10));
+    geo->triangle[geo->size_triangle - 1].point = realloc(geo->triangle[geo->size_triangle - 1].point, sizeof(Point) * 4 + 10);
     for (int k = 0; k < 4; k++) {
         geo->triangle[geo->size_triangle - 1].point[k].x = geo->triangle[geo->size_triangle - 1].point[k].y = 0;
     }

@@ -9,10 +9,16 @@ typedef struct {
 } Point;
 
 typedef struct {
+    int serial_number;
+    int name;
+} Intersects;
+
+typedef struct {
     float perimeter;
     float area;
     Point point;
     float radius;
+    Intersects intersects[20];
     size_t serial_number;
 } Circle;
 
@@ -20,6 +26,7 @@ typedef struct {
     float perimeter;
     float area;
     Point* point;
+    Intersects intersects[20];
     size_t serial_number;
 } Triangle;
 
@@ -27,6 +34,7 @@ typedef struct {
     float perimeter;
     float area;
     Point* points;
+    Intersects intersects[20];
     size_t numeral_points;
     size_t serial_number;
 } Poligon;

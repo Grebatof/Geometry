@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define M_PI 3.1415926535
+#define PI 3.1415926535
 
 float distance_between_points(Point first_point, Point second_point)
 {
@@ -72,6 +72,9 @@ void error_handling(int* i, int size, char* arr, int error, int row_count)
 
 int figure_check(char* figure_name)
 {
+    if (!figure_name) {
+        return -1;
+    }
     if (!(strcmp(figure_name, "circle")))
         return 1;
     if (!(strcmp(figure_name, "triangle")))
@@ -84,11 +87,11 @@ int figure_check(char* figure_name)
 // возвращать тип ошибки
 void circle_area_calculation(Geometry* geo)
 {
-    geo->circle[geo->size_circle - 1].area = (float)geo->circle[geo->size_circle - 1].radius * geo->circle[geo->size_circle - 1].radius * M_PI;
+    geo->circle[geo->size_circle - 1].area = (float)geo->circle[geo->size_circle - 1].radius * geo->circle[geo->size_circle - 1].radius * PI;
 }
 void circle_perimeter_calculation(Geometry* geo)
 {
-    geo->circle[geo->size_circle - 1].perimeter = (float)geo->circle[geo->size_circle - 1].radius * M_PI * 2;
+    geo->circle[geo->size_circle - 1].perimeter = (float)geo->circle[geo->size_circle - 1].radius * PI * 2;
 }
 int processing_radius(int* i, int size, char* arr, Geometry* geo)
 {

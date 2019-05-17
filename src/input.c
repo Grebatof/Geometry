@@ -8,8 +8,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-void input_processing(char* arr, int size, Geometry* geo, int row_count)
+int input_processing(char* arr, int size, Geometry* geo, int row_count)
 {
+    if (geo == NULL) {
+        return -1;
+    }
     int i;
     char figure_name[100]; // dynamic array
     for (i = 0; i < size; i++) {
@@ -39,4 +42,5 @@ void input_processing(char* arr, int size, Geometry* geo, int row_count)
         processing_poligon(&i, size, arr, geo, row_count);
         break;
     }
+    return 0;
 }

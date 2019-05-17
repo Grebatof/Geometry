@@ -291,7 +291,7 @@ int main()
     char arr[100]; //сделать 100 и каждый раз идти к arr[0], когда встретили \n,
                    //для полигона выделять +100 памяти
     FILE* myfile;
-    myfile = fopen("geo1.txt", "r");
+    myfile = fopen("./bin/geo1.txt", "r");
 
     if (myfile == NULL) {
         printf("No file\n");
